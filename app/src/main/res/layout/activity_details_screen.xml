@@ -17,7 +17,18 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/Theme.BbmpAntimyatra.PopupOverlay" />
+            app:popupTheme="@style/Theme.BbmpAntimyatra.PopupOverlay" >
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:textSize="15dp"
+            android:text="Details"
+            android:layout_marginLeft="50dp"
+            android:textColor="@android:color/white"></TextView>
+        </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
 

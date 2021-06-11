@@ -2,9 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.bbmpantimyatra">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application
         android:allowBackup="true"
@@ -13,23 +13,26 @@
         android:roundIcon="@mipmap/app_icon_new"
         android:supportsRtl="true"
         android:theme="@style/Theme.BbmpAntimyatra">
-        <activity android:name=".DetailsScreen"
-            android:label="@string/details_screen"
-            android:theme="@style/Theme.BbmpAntimyatra.NoActionBar"></activity>
-        <activity android:name=".SplashScreen"
+        <activity android:name=".LoginActivity"
             android:theme="@style/Theme.BbmpAntimyatra.NoActionBar"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".DetailsScreen"
+            android:theme="@style/Theme.BbmpAntimyatra.NoActionBar" />
+        <activity
+            android:name=".SplashScreen"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.BbmpAntimyatra.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-        <activity android:name=".MainActivity"
-            android:screenOrientation="portrait">
-
-        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:label="Home"
+            android:theme="@style/Theme.BbmpAntimyatra.NoActionBar"/>
     </application>
 
 </manifest>

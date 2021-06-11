@@ -1,62 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".MainActivity">
 
-
-    <LinearLayout
-        android:id="@+id/secondlayout"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="visible"
-        android:layout_marginTop="20dp">
+        android:theme="@style/Theme.BbmpAntimyatra.AppBarOverlay">
 
-
-
-        <EditText
-            android:id="@+id/tokennumber"
-            android:layout_below="@id/tokennumber"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:hint="Enter the cremToken number"
-            android:textStyle="bold"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:textSize="15dp"/>
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/Theme.BbmpAntimyatra.PopupOverlay" />
 
-        <Button
-            android:id="@+id/searchone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAllCaps="false"
-            android:textColor="#7F8181"
-            android:backgroundTint="@android:color/darker_gray"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/search"
-            android:layout_below="@+id/tokennumber"/>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <include layout="@layout/activity_main_two" />
 
 
-        <Button
-            android:id="@+id/searchtwo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAllCaps="false"
-            android:visibility="gone"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/search" />
-
-
-
-
-
-
-    </LinearLayout>
-
-
-</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

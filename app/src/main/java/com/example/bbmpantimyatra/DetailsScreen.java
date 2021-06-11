@@ -1,17 +1,23 @@
 package com.example.bbmpantimyatra;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -42,7 +48,18 @@ public class DetailsScreen extends AppCompatActivity {
     AlertDialog.Builder builder;
     private ProgressDialog progressDialog;
 
+    String usernamestr,passwordstr;
+    SharedPreferences sh;
 
+
+
+    // Creating an Editor object to edit(write to the file)
+    SharedPreferences.Editor myEdit;
+
+    TextView mTitle;
+
+
+    @SuppressLint("WrongConstant")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +68,7 @@ public class DetailsScreen extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
 
 
         builder = new AlertDialog.Builder(this);
@@ -58,6 +76,18 @@ public class DetailsScreen extends AppCompatActivity {
 
         //Get the bundle
         Bundle bundle = getIntent().getExtras();
+
+        // Retrieving the value using its keys the file name
+        // must be same in both saving and retrieving the data
+        sh = getSharedPreferences("usercredentialbbmp", MODE_APPEND);
+        myEdit = sh.edit();
+
+
+        usernamestr = sh.getString("username", "");
+        passwordstr = sh.getString("password", "");
+
+        Log.d("username12:","username12:"+usernamestr);
+        Log.d("username112:","username112:"+passwordstr);
 
 
         //Extract the data…
@@ -95,6 +125,7 @@ public class DetailsScreen extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
 
         framefourlayout = findViewById(R.id.framefour);
 
@@ -147,6 +178,13 @@ public class DetailsScreen extends AppCompatActivity {
 
 
 
+        if(cremTokenstr != null && !cremTokenstr.isEmpty()){
+//            mTitle.setText(cremTokenstr);
+            getSupportActionBar().setTitle("Token No : "+cremTokenstr);
+        }else {
+//            mTitle.setText("Details");
+            getSupportActionBar().setTitle("Details");
+        }
 
         if( causeOfDeathstr != null && !causeOfDeathstr.isEmpty()){
             causeofdeathvaltxt.setText(causeOfDeathstr);
@@ -379,6 +417,34 @@ public class DetailsScreen extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.logout_one:
+                logOutMethod();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void logOutMethod() {
+
+        myEdit.clear().commit();
+        Intent intent = new Intent(DetailsScreen.this,LoginActivity.class);
+        startActivity(intent);
+
+    }
+
+
 
     private void loadDataForReached(String tokennumber) {
 
@@ -388,8 +454,15 @@ public class DetailsScreen extends AppCompatActivity {
         Log.d("Successful2: ","Successful2: "+tokennumber);
 
         //Setting up Mobyra Client
+//        MobyraClientBuilder builder = new MobyraClientBuilder.Builder("bangalorefinalrites.in")
+//                .withUsernamePassword("crond", "slot@123")
+//                .withContext("testenv")
+//                .withApiVersion("v2")
+//                .withLogLevel(MobyraClientBuilder.LogLevel.BASIC)
+//                .build();
+
         MobyraClientBuilder builder = new MobyraClientBuilder.Builder("bangalorefinalrites.in")
-                .withUsernamePassword("crond", "slot@123")
+                .withUsernamePassword(usernamestr, passwordstr)
                 .withContext("testenv")
                 .withApiVersion("v2")
                 .withLogLevel(MobyraClientBuilder.LogLevel.BASIC)
@@ -427,7 +500,9 @@ public class DetailsScreen extends AppCompatActivity {
 
 
             }else {
-                Toast.makeText(this, "Something went wrong! Try Again later", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Username and Password incorrect", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(DetailsScreen.this,LoginActivity.class);
+                startActivity(intent);
             }
 //
 //            JSONObject jsonObject = null;
@@ -462,8 +537,14 @@ public class DetailsScreen extends AppCompatActivity {
         Log.d("Successful2: ","Successful2: "+tokennumber);
 
         //Setting up Mobyra Client
+//        MobyraClientBuilder builder = new MobyraClientBuilder.Builder("bangalorefinalrites.in")
+//                .withUsernamePassword("crond", "slot@123")
+//                .withContext("testenv")
+//                .withApiVersion("v2")
+//                .withLogLevel(MobyraClientBuilder.LogLevel.BASIC)
+//                .build();
         MobyraClientBuilder builder = new MobyraClientBuilder.Builder("bangalorefinalrites.in")
-                .withUsernamePassword("crond", "slot@123")
+                .withUsernamePassword(usernamestr, passwordstr)
                 .withContext("testenv")
                 .withApiVersion("v2")
                 .withLogLevel(MobyraClientBuilder.LogLevel.BASIC)
@@ -495,7 +576,9 @@ public class DetailsScreen extends AppCompatActivity {
 
 
             }else {
-                Toast.makeText(this, "Something went wrong! Try Again later", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Username and Password incorrect", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(DetailsScreen.this,LoginActivity.class);
+                startActivity(intent);
             }
 
 

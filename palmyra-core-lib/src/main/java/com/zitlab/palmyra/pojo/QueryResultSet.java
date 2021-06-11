@@ -15,6 +15,33 @@ public class QueryResultSet<T> {
     private List<T> result;
 
     private String reqStatus;
+    private String loginName;
+    private String name;
+    private String mobileNumber;
+
+    public String getLoginName() {
+        return loginName;
+    }
+
+    public void setLoginName(String loginName) {
+        this.loginName = loginName;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getMobileNumber() {
+        return mobileNumber;
+    }
+
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
+    }
 
     /**
      * Gets count.
