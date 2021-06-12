@@ -43,6 +43,11 @@ public class ResultNew {
     @SerializedName("reqStatus")
     @Expose
     private String reqStatus;
+
+    @SerializedName("reqStatusCode")
+    @Expose
+    private String reqStatusCode;
+
     @SerializedName("mobileNumber")
     @Expose
     private String mobileNumber;
@@ -107,6 +112,14 @@ public class ResultNew {
 
     public String getName() {
         return name;
+    }
+
+    public String getReqStatusCode() {
+        return reqStatusCode;
+    }
+
+    public void setReqStatusCode(String reqStatusCode) {
+        this.reqStatusCode = reqStatusCode;
     }
 
     public void setName(String name) {

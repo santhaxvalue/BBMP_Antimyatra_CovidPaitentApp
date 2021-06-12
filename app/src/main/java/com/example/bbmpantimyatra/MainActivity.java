@@ -206,6 +206,9 @@ public class MainActivity extends AppCompatActivity {
                     bundle.putString("gender", responseList.get(0).getGender());
                     bundle.putString("religion", responseList.get(0).getReligion());
                     bundle.putString("reqStatus", responseList.get(0).getReqStatus());
+
+                    bundle.putString("reqStatusCode", responseList.get(0).getReqStatusCode());
+
                     bundle.putString("yearOfBirth", responseList.get(0).getYearOfBirth());
                     bundle.putString("zone", responseList.get(0).getZone());
                     bundle.putString("causeOfDeath", responseList.get(0).getCauseOfDeath());
@@ -221,6 +224,9 @@ public class MainActivity extends AppCompatActivity {
                     bundle.putString("timeSlot", responseList.get(0).getTimeSlot());
                     bundle.putString("crematoriumCode", responseList.get(0).getCrematoriumCode());
                     bundle.putString("buSrfId", responseList.get(0).getBuSrfId());
+
+
+
 
                     //Add the bundle to the intent
                     intent.putExtras(bundle);

@@ -34,9 +34,13 @@ import java.util.Map;
 public class DetailsScreen extends AppCompatActivity {
 
 
-    TextView statussubmittedtxt;
+    TextView statuscrematedtxt;
     TextView statusreachedtxt;
+    TextView statuscreatedtxt;
+    TextView statusallotedtxt;
     TextView statuscompletedtxt;
+    TextView statuscancelledtxt;
+    TextView statusanyothertxt;
 
     Button reachedbuttontxt;
     Button reachedoffbuttontxt;
@@ -121,6 +125,8 @@ public class DetailsScreen extends AppCompatActivity {
 
         String reqStatusstr = bundle.getString("reqStatus");
 
+        String reqStatusCodestr = bundle.getString("reqStatusCode");
+
 
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -152,9 +158,15 @@ public class DetailsScreen extends AppCompatActivity {
         TextView cremdatevaltxt = findViewById(R.id.cremdateval);
         TextView cremslotvaltxt = findViewById(R.id.cremslotval);
 
-        statussubmittedtxt = findViewById(R.id.statussubmitted);
-        statusreachedtxt = findViewById(R.id.statusreached);
-        statuscompletedtxt = findViewById(R.id.statuscompleted);
+        statuscreatedtxt = findViewById(R.id.status_created);
+        statusreachedtxt = findViewById(R.id.status_reached);
+        statuscrematedtxt = findViewById(R.id.status_cremated);
+
+        statusallotedtxt = findViewById(R.id.status_allotted);
+        statuscompletedtxt = findViewById(R.id.status_completed);
+        statuscancelledtxt = findViewById(R.id.status_cancelled);
+
+        statusanyothertxt = findViewById(R.id.status_anyother);
 
         reachedbuttontxt = findViewById(R.id.reached);
         reachedoffbuttontxt = findViewById(R.id.reachedoff);
@@ -163,9 +175,15 @@ public class DetailsScreen extends AppCompatActivity {
 
         framefourlayout.setVisibility(View.GONE);
 
-        statuscompletedtxt.setVisibility(View.GONE);
+        statuscreatedtxt.setVisibility(View.GONE);
         statusreachedtxt.setVisibility(View.GONE);
-        statussubmittedtxt.setVisibility(View.GONE);
+        statuscrematedtxt.setVisibility(View.GONE);
+
+        statusallotedtxt.setVisibility(View.GONE);
+        statuscompletedtxt.setVisibility(View.GONE);
+        statuscancelledtxt.setVisibility(View.GONE);
+
+        statusanyothertxt.setVisibility(View.GONE);
 
         reachedbuttontxt.setVisibility(View.GONE);
         reachedoffbuttontxt.setVisibility(View.GONE);
@@ -306,10 +324,18 @@ public class DetailsScreen extends AppCompatActivity {
 
 
 
-        if(reqStatusstr.contains("Created")){
-            statuscompletedtxt.setVisibility(View.GONE);
+        if(reqStatusCodestr != null && reqStatusCodestr.contains("N")){
+            statuscreatedtxt.setVisibility(View.VISIBLE);
+            statuscreatedtxt.setText("Status : "+reqStatusstr);
+
             statusreachedtxt.setVisibility(View.GONE);
-            statussubmittedtxt.setVisibility(View.VISIBLE);
+            statuscrematedtxt.setVisibility(View.GONE);
+            statusallotedtxt.setVisibility(View.GONE);
+            statuscompletedtxt.setVisibility(View.GONE);
+            statuscancelledtxt.setVisibility(View.GONE);
+
+            statusanyothertxt.setVisibility(View.GONE);
+
 
             framefourlayout.setVisibility(View.VISIBLE);
 
@@ -318,10 +344,18 @@ public class DetailsScreen extends AppCompatActivity {
             reachedbuttontxt.setVisibility(View.VISIBLE);
             reachedoffbuttontxt.setVisibility(View.GONE);
 
-        }else if(reqStatusstr.contains("Reached")){
-            statuscompletedtxt.setVisibility(View.GONE);
+        }else if(reqStatusCodestr != null && reqStatusCodestr.contains("R")){
+
             statusreachedtxt.setVisibility(View.VISIBLE);
-            statussubmittedtxt.setVisibility(View.GONE);
+            statusreachedtxt.setText("Status : "+reqStatusstr);
+
+            statuscreatedtxt.setVisibility(View.GONE);
+            statuscrematedtxt.setVisibility(View.GONE);
+            statusallotedtxt.setVisibility(View.GONE);
+            statuscompletedtxt.setVisibility(View.GONE);
+            statuscancelledtxt.setVisibility(View.GONE);
+
+            statusanyothertxt.setVisibility(View.GONE);
 
             framefourlayout.setVisibility(View.VISIBLE);
 
@@ -330,10 +364,17 @@ public class DetailsScreen extends AppCompatActivity {
             reachedbuttontxt.setVisibility(View.GONE);
             reachedoffbuttontxt.setVisibility(View.VISIBLE);
 
-        }else if(reqStatusstr.contains("Cremated")){
-            statuscompletedtxt.setVisibility(View.VISIBLE);
+        }else if(reqStatusCodestr != null && reqStatusCodestr.contains("Z")){
+            statuscrematedtxt.setVisibility(View.VISIBLE);
+            statuscrematedtxt.setText("Status : "+reqStatusstr);
+
+            statuscreatedtxt.setVisibility(View.GONE);
             statusreachedtxt.setVisibility(View.GONE);
-            statussubmittedtxt.setVisibility(View.GONE);
+            statusallotedtxt.setVisibility(View.GONE);
+            statuscompletedtxt.setVisibility(View.GONE);
+            statuscancelledtxt.setVisibility(View.GONE);
+
+            statusanyothertxt.setVisibility(View.GONE);
 
             framefourlayout.setVisibility(View.GONE);
 
@@ -341,6 +382,84 @@ public class DetailsScreen extends AppCompatActivity {
 //            completebuttontxt.setVisibility(View.GONE);
 //            reachedbuttontxt.setVisibility(View.GONE);
 //            reachedoffbuttontxt.setVisibility(View.GONE);
+
+        }else if(reqStatusCodestr != null && reqStatusCodestr.contains("A")){
+
+            statusallotedtxt.setVisibility(View.VISIBLE);
+            statusallotedtxt.setText("Status : "+reqStatusstr);
+
+            statuscreatedtxt.setVisibility(View.GONE);
+            statuscrematedtxt.setVisibility(View.GONE);
+            statusreachedtxt.setVisibility(View.GONE);
+            statuscompletedtxt.setVisibility(View.GONE);
+            statuscancelledtxt.setVisibility(View.GONE);
+
+            statusanyothertxt.setVisibility(View.GONE);
+
+            framefourlayout.setVisibility(View.VISIBLE);
+
+            completedbuttonofftxt.setVisibility(View.VISIBLE);
+            completebuttontxt.setVisibility(View.GONE);
+            reachedbuttontxt.setVisibility(View.VISIBLE);
+            reachedoffbuttontxt.setVisibility(View.GONE);
+
+        }else if(reqStatusCodestr != null && reqStatusCodestr.contains("C")){
+
+            statuscompletedtxt.setVisibility(View.VISIBLE);
+            statuscompletedtxt.setText("Status : "+reqStatusstr);
+
+            statuscreatedtxt.setVisibility(View.GONE);
+            statuscrematedtxt.setVisibility(View.GONE);
+            statusreachedtxt.setVisibility(View.GONE);
+            statusallotedtxt.setVisibility(View.GONE);
+            statuscancelledtxt.setVisibility(View.GONE);
+
+            statusanyothertxt.setVisibility(View.GONE);
+
+            framefourlayout.setVisibility(View.GONE);
+
+
+
+        }else if(reqStatusCodestr != null && reqStatusCodestr.contains("X")){
+            statuscancelledtxt.setVisibility(View.VISIBLE);
+            statuscancelledtxt.setText("Status : "+reqStatusstr);
+
+            statuscreatedtxt.setVisibility(View.GONE);
+            statusreachedtxt.setVisibility(View.GONE);
+            statuscrematedtxt.setVisibility(View.GONE);
+            statusallotedtxt.setVisibility(View.GONE);
+            statuscompletedtxt.setVisibility(View.GONE);
+
+            statusanyothertxt.setVisibility(View.GONE);
+
+            framefourlayout.setVisibility(View.GONE);
+
+//            completedbuttonofftxt.setVisibility(View.GONE);
+//            completebuttontxt.setVisibility(View.GONE);
+//            reachedbuttontxt.setVisibility(View.GONE);
+//            reachedoffbuttontxt.setVisibility(View.GONE);
+
+        }else{
+
+            if(reqStatusCodestr != null) {
+
+                statusanyothertxt.setVisibility(View.VISIBLE);
+                statusanyothertxt.setText("Status : " + reqStatusstr);
+
+                statuscreatedtxt.setVisibility(View.GONE);
+                statusreachedtxt.setVisibility(View.GONE);
+                statuscrematedtxt.setVisibility(View.GONE);
+                statusallotedtxt.setVisibility(View.GONE);
+                statuscompletedtxt.setVisibility(View.GONE);
+                statuscancelledtxt.setVisibility(View.GONE);
+
+                framefourlayout.setVisibility(View.VISIBLE);
+
+                completedbuttonofftxt.setVisibility(View.VISIBLE);
+                completebuttontxt.setVisibility(View.GONE);
+                reachedbuttontxt.setVisibility(View.VISIBLE);
+                reachedoffbuttontxt.setVisibility(View.GONE);
+            }
 
         }
 
@@ -487,9 +606,14 @@ public class DetailsScreen extends AppCompatActivity {
                 Toast.makeText(DetailsScreen.this,"Changed status successfully",
                         Toast.LENGTH_SHORT).show();
 
-                statuscompletedtxt.setVisibility(View.GONE);
                 statusreachedtxt.setVisibility(View.VISIBLE);
-                statussubmittedtxt.setVisibility(View.GONE);
+
+                statuscreatedtxt.setVisibility(View.GONE);
+                statuscrematedtxt.setVisibility(View.GONE);
+                statusallotedtxt.setVisibility(View.GONE);
+                statuscompletedtxt.setVisibility(View.GONE);
+                statuscancelledtxt.setVisibility(View.GONE);
+                statusanyothertxt.setVisibility(View.GONE);
 
                 framefourlayout.setVisibility(View.VISIBLE);
 
@@ -568,9 +692,14 @@ public class DetailsScreen extends AppCompatActivity {
                 Toast.makeText(DetailsScreen.this,"Changed status successfully",
                         Toast.LENGTH_SHORT).show();
 
-                statuscompletedtxt.setVisibility(View.VISIBLE);
+                statuscrematedtxt.setVisibility(View.VISIBLE);
+
+                statuscreatedtxt.setVisibility(View.GONE);
                 statusreachedtxt.setVisibility(View.GONE);
-                statussubmittedtxt.setVisibility(View.GONE);
+                statusallotedtxt.setVisibility(View.GONE);
+                statuscompletedtxt.setVisibility(View.GONE);
+                statuscancelledtxt.setVisibility(View.GONE);
+                statusanyothertxt.setVisibility(View.GONE);
 
                 framefourlayout.setVisibility(View.GONE);
 
