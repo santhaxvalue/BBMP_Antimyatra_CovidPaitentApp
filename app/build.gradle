@@ -7,19 +7,40 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.example.bbmpantimyatra"
+        applicationId "com.bbmp.bbmpantimyatra"
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 1
+        versionCode 3
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+
+    signingConfigs {
+        release {
+            storeFile file("D:/Works_of_Santhakumar/BbmpFinalRites/app/bbmpantimyatra.jks")
+            storePassword "bbmpantimyatra"
+            keyAlias "bbmpantimyatra"
+            keyPassword "bbmpantimyatra"
+
+            // Optional, specify signing versions used
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+    }
+
+
+
     buildTypes {
         release {
+
+            useProguard true
+            signingConfig signingConfigs.release
             minifyEnabled false
+            //shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
         }
     }
     compileOptions {
