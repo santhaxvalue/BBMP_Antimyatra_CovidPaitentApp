@@ -556,9 +556,34 @@ public class DetailsScreen extends AppCompatActivity {
 
     private void logOutMethod() {
 
-        myEdit.clear().commit();
-        Intent intent = new Intent(DetailsScreen.this,LoginActivity.class);
-        startActivity(intent);
+
+        //Setting message manually and performing action on button click
+        builder.setMessage("Are you sure you want to LogOut?")
+                .setCancelable(false)
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+
+                        // Check for Internet Connection
+                        if (isConnected()) {
+                            myEdit.clear().commit();
+                            Intent intent = new Intent(DetailsScreen.this,LoginActivity.class);
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //  Action for 'NO' Button
+                        dialog.cancel();
+                    }
+                });
+
+        builder.show();
+
 
     }
 
@@ -579,10 +604,10 @@ public class DetailsScreen extends AppCompatActivity {
 //                .withLogLevel(MobyraClientBuilder.LogLevel.BASIC)
 //                .build();
 
-        MobyraClientBuilder builder = new MobyraClientBuilder.Builder("bangalorefinalrites.in")
+        MobyraClientBuilder builder = new MobyraClientBuilder.Builder(Constants.BASE_URL)
                 .withUsernamePassword(usernamestr, passwordstr)
-                .withContext("testenv")
-                .withApiVersion("v2")
+                .withContext(Constants.SERVER_CONTEXT)
+                .withApiVersion(Constants.API_VERSION)
                 .withLogLevel(MobyraClientBuilder.LogLevel.BASIC)
                 .build();
         MobyraClient client = new MobyraClient(builder);
@@ -597,6 +622,8 @@ public class DetailsScreen extends AppCompatActivity {
 
 
 //            progressDialog.dismiss();
+
+            try{
 
             String requestStatusStr = response.getReqStatus();
 
@@ -626,6 +653,10 @@ public class DetailsScreen extends AppCompatActivity {
                 Toast.makeText(this, "Username and Password incorrect", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(DetailsScreen.this,LoginActivity.class);
                 startActivity(intent);
+            }
+
+            }catch (NullPointerException e){
+                Toast.makeText(this, "Something went wrong! Please try again later", Toast.LENGTH_SHORT).show();
             }
 //
 //            JSONObject jsonObject = null;
@@ -666,10 +697,10 @@ public class DetailsScreen extends AppCompatActivity {
 //                .withApiVersion("v2")
 //                .withLogLevel(MobyraClientBuilder.LogLevel.BASIC)
 //                .build();
-        MobyraClientBuilder builder = new MobyraClientBuilder.Builder("bangalorefinalrites.in")
+        MobyraClientBuilder builder = new MobyraClientBuilder.Builder(Constants.BASE_URL)
                 .withUsernamePassword(usernamestr, passwordstr)
-                .withContext("testenv")
-                .withApiVersion("v2")
+                .withContext(Constants.SERVER_CONTEXT)
+                .withApiVersion(Constants.API_VERSION)
                 .withLogLevel(MobyraClientBuilder.LogLevel.BASIC)
                 .build();
         MobyraClient client = new MobyraClient(builder);
@@ -683,6 +714,8 @@ public class DetailsScreen extends AppCompatActivity {
         client.exec(map, CompletedResponse.class, (status, response, exception) -> {
 
 //            progressDialog.dismiss();
+
+            try{
 
             String requestStatusStr = response.getReqStatus();
 
@@ -707,6 +740,10 @@ public class DetailsScreen extends AppCompatActivity {
                 Toast.makeText(this, "Username and Password incorrect", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(DetailsScreen.this,LoginActivity.class);
                 startActivity(intent);
+            }
+
+            }catch (NullPointerException e){
+                Toast.makeText(this, "Something went wrong! Please try again later", Toast.LENGTH_SHORT).show();
             }
 
 

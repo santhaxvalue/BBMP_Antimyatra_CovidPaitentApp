@@ -139,12 +139,23 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.setMessage("Loading!!!");
         progressDialog.show();
 
-        MobyraClientBuilder builder = new MobyraClientBuilder.Builder("bangalorefinalrites.in")
-                .withUsernamePassword("admin", "covid")
-                .withContext("testenv")
-                .withApiVersion("v2")
+        //old code
+//        MobyraClientBuilder builder = new MobyraClientBuilder.Builder("bangalorefinalrites.in")
+//                .withUsernamePassword("admin", "covid")
+//                .withContext("testenv")
+//                .withApiVersion("v2")
+//                .withLogLevel(MobyraClientBuilder.LogLevel.BASIC)
+//                .build();
+        //old code
+
+        //new code
+        MobyraClientBuilder builder = new MobyraClientBuilder.Builder(Constants.BASE_URL)
+                .withUsernamePassword(usernameone, passwordone)
+                .withContext(Constants.SERVER_CONTEXT)
+                .withApiVersion(Constants.API_VERSION)
                 .withLogLevel(MobyraClientBuilder.LogLevel.BASIC)
                 .build();
+        //new code
         MobyraClient client = new MobyraClient(builder);
 
         Map<String, String> map = new HashMap<String,String>();
@@ -153,32 +164,42 @@ public class LoginActivity extends AppCompatActivity {
 
             progressDialog.dismiss();
 
-            String requestloginnamestr = response.getLoginName();
+            try {
 
-            if(requestloginnamestr != null && !requestloginnamestr.isEmpty()){
-
-
-                Log.d("Successloginsuccess : ","Successfulloginsuccess : "+requestloginnamestr);
-
-                // Storing the key and its value as the data fetched from edittext
-                myEdit.putString("username", usernameone);
-                myEdit.putString("password", passwordone);
-
-                // Once the changes have been made,
-                // we need to commit to apply those changes made,
-                // otherwise, it will throw an error
-                myEdit.commit();
+                String requestloginnamestr = response.getLoginName();
 
 
-                Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                startActivity(intent);
+                if (requestloginnamestr != null && !requestloginnamestr.isEmpty()) {
 
 
-            } else {
+                    Log.d("Successloginsuccess : ", "Successfulloginsuccess : " + requestloginnamestr);
 
-                Toast.makeText(this, "Something went wrong! Please try again", Toast.LENGTH_SHORT).show();
+                    // Storing the key and its value as the data fetched from edittext
+                    myEdit.putString("username", usernameone);
+                    myEdit.putString("password", passwordone);
 
+                    // Once the changes have been made,
+                    // we need to commit to apply those changes made,
+                    // otherwise, it will throw an error
+                    myEdit.commit();
+
+
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
+
+
+                } else {
+
+                    Toast.makeText(this, "Something went wrong! Please try again later", Toast.LENGTH_SHORT).show();
+
+                }
+
+            }catch (NullPointerException e){
+                Toast.makeText(this, "Username and Password incorrect", Toast.LENGTH_SHORT).show();
+                useredit.setText("");
+                passwordedit.setText("");
             }
+
         });
 
     }

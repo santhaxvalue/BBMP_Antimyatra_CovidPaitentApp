@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
@@ -46,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
     // Creating an Editor object to edit(write to the file)
     SharedPreferences.Editor myEdit;
 
+    AlertDialog.Builder builder;
+
 
     @SuppressLint("WrongConstant")
     @Override
@@ -61,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Retrieving the value using its keys the file name
         // must be same in both saving and retrieving the data
+        builder = new AlertDialog.Builder(this);
         sh = getSharedPreferences("usercredentialbbmp", MODE_APPEND);
         myEdit = sh.edit();
 
@@ -146,9 +151,35 @@ public class MainActivity extends AppCompatActivity {
 
     private void logOutMethod() {
 
-        myEdit.clear().commit();
-        Intent intent = new Intent(MainActivity.this,LoginActivity.class);
-        startActivity(intent);
+
+
+        //Setting message manually and performing action on button click
+        builder.setMessage("Are you sure you want to LogOut?")
+                .setCancelable(false)
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+
+                        // Check for Internet Connection
+                        if (isConnected()) {
+                            myEdit.clear().commit();
+                            Intent intent = new Intent(MainActivity.this,LoginActivity.class);
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //  Action for 'NO' Button
+                        dialog.cancel();
+                    }
+                });
+
+        builder.show();
+
 
     }
 
@@ -167,10 +198,10 @@ public class MainActivity extends AppCompatActivity {
 //                .withApiVersion("v2")
 //                .withLogLevel(MobyraClientBuilder.LogLevel.BASIC)
 //                .build();
-        MobyraClientBuilder builder = new MobyraClientBuilder.Builder("bangalorefinalrites.in")
+        MobyraClientBuilder builder = new MobyraClientBuilder.Builder(Constants.BASE_URL)
                 .withUsernamePassword(usernamestr, passwordstr)
-                .withContext("testenv")
-                .withApiVersion("v2")
+                .withContext(Constants.SERVER_CONTEXT)
+                .withApiVersion(Constants.API_VERSION)
                 .withLogLevel(MobyraClientBuilder.LogLevel.BASIC)
                 .build();
         MobyraClient client = new MobyraClient(builder);
@@ -240,9 +271,9 @@ public class MainActivity extends AppCompatActivity {
                 }
 
             }catch (NullPointerException e){
-                Toast.makeText(this, "Username and Password incorrect", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(MainActivity.this,LoginActivity.class);
-                startActivity(intent);
+                Toast.makeText(this, "No Record Found!", Toast.LENGTH_SHORT).show();
+//                Intent intent = new Intent(MainActivity.this,LoginActivity.class);
+//                startActivity(intent);
             }
         });
 
